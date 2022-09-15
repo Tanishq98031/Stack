@@ -1,0 +1,25 @@
+import java.util.*;
+public class Solution {
+	public static void deleteMiddle(Stack<Integer> inputStack, int N) {
+		// WRITE YOUR CODE HERE
+        int count = 0;
+        int mid = ((N+1)/2 - 1);
+        solve(inputStack, count, mid);
+	}
+    
+    public static void solve(Stack<Integer> st, int count, int n)
+    {
+        if(count == n)
+        {
+            st.pop();
+            return;
+        }
+        
+        int element = st.peek();
+        st.pop();
+        
+        solve(st, count+1, n);
+        
+        st.push(element);
+    }
+}
