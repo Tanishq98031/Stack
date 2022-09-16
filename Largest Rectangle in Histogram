@@ -1,0 +1,67 @@
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+        int [] n = new int[heights.length];
+        int [] p = new int[heights.length];
+        
+        n = getNextSmaller(heights);
+        p = getPreviousSmaller(heights);
+        
+        int area = Integer.MIN_VALUE;
+        for(int i = 0; i < heights.length; i++)
+        {
+            int length = heights[i];
+            
+            if(n[i] == -1)
+            {
+                n[i] = heights.length;
+            }
+            
+            int breadth = n[i] - p[i] - 1;
+            int newArea = length * breadth;
+            
+            if(newArea > area)
+            {
+                area = newArea;
+            }
+        }
+        return area;
+    }
+    
+    public int[] getNextSmaller(int [] arr)
+    {
+        Stack<Integer> st = new Stack<>();
+        st.push(-1);
+        int [] a = new int[arr.length];
+        for(int i = arr.length - 1; i >= 0; i--)
+        {
+            int x = arr[i];
+            while(st.peek() != -1 && arr[st.peek()] >= x)
+            {
+                st.pop();
+            }
+            int top = st.peek();
+            a[i] = top;
+            st.push(i);
+        }
+        return a;
+    }
+    
+    public int[] getPreviousSmaller(int [] arr)
+    {
+        Stack<Integer> st = new Stack<>();
+        st.push(-1);
+        int [] a = new int[arr.length];
+        for(int i = 0; i < arr.length; i++)
+        {
+            int x = arr[i];
+            while(st.peek() != -1 && arr[st.peek()] >= x)
+            {
+                st.pop();
+            }
+            int top = st.peek();
+            a[i] = top;
+            st.push(i);
+        }
+        return a;
+    }
+}
