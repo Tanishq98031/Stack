@@ -1,0 +1,77 @@
+import java.util.* ;
+import java.io.*; 
+public class NStack {
+    // Initialize your data structure.
+    int [] arr;
+    int n, s;
+    int freespot;
+    int [] next;
+    int [] top;
+    public NStack(int N, int S) {
+        // Write your code here.
+        n = N;
+        s = S;
+        top = new int[this.n];
+        next = new int[this.s];
+        arr = new int[this.s];
+        
+        for(int i = 0; i < n; i++)
+        {
+            top[i] = -1;
+        }
+        
+        for(int i = 0; i < s; i++)
+        {
+            next[i] = i+1;
+        }
+        next[s-1] = -1;
+        
+        freespot = 0;
+    }
+
+    // Pushes 'X' into the Mth stack. Returns true if it gets pushed into the stack, and false otherwise.
+    public boolean push(int x, int m) {
+        
+        //overflow condition
+        if(freespot == -1)
+        {
+            return false;
+        }
+        
+        //find free index;
+        int index = freespot;
+        
+        //insert element;
+        arr[index] = x;
+        
+        //update freespot
+        freespot = next[index];
+        
+        //update the next array
+        next[index] = top[m-1];
+        
+        //update top
+        top[m-1] = index;
+        
+        return true;
+    }
+
+    // Pops top element from Mth Stack. Returns -1 if the stack is empty, otherwise returns the popped element.
+    public int pop(int m) {
+        // Write your code here.
+        if(top[m-1] == -1)
+        {
+            return -1;
+        }
+        
+        int index = top[m-1];
+        
+        top[m-1] = next[index];
+        
+        next[index] = freespot;
+        
+        freespot = index;
+        
+        return arr[index];
+    }
+}
