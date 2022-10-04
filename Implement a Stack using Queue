@@ -1,0 +1,83 @@
+package javacodes;
+import java.util.*;
+
+class qStack
+{
+    Queue<Integer> q1 = new LinkedList<>();;
+    Queue<Integer> q2 = new LinkedList<>();;
+    int size = 0;
+
+    public void push(int x)
+    {
+        q2.offer(x);
+
+        while(!q1.isEmpty())
+        {
+            int element = q1.peek();
+            q2.offer(element);
+            q1.poll();
+        }
+
+        Queue<Integer> q = q1;
+        q1 = q2;
+        q2 = q;
+        
+        size += 1;
+    }
+
+    public int pop()
+    {
+        if(q1.isEmpty())
+        {
+            return -1;
+        }
+        int element = q1.peek();
+        q1.poll();
+        size -= 1;
+        return element;
+    }
+
+    public int peek()
+    {
+        if(q1.isEmpty())
+        {
+            return -1;
+        }
+        else
+        {
+            return q1.peek();
+        }
+    }
+
+    public boolean empty()
+    {
+        return q1.isEmpty();
+    }
+
+    public int size()
+    {
+        return size;
+    }
+
+}
+
+public class StackUsingQueue
+{
+    public static void main(String[] args) {
+        
+        qStack s = new qStack();
+        s.push(1);
+        s.push(2);
+        s.push(3);
+        s.push(4);
+        s.push(5);
+        s.push(6);
+        System.out.println(s.peek());
+
+        System.out.println(s.pop());
+
+        System.out.println(s.peek());
+
+        System.out.println(s.size());
+    }
+}
